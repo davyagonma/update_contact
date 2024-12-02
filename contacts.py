@@ -6,6 +6,24 @@ def process_phone_numbers(file):
     # Charger le fichier CSV
     contacts = pd.read_csv(file)
     
+    # Fonction pour nettoyer et mettre à jour les numéros
+    def update_phone_number(phone):
+        phone = re.sub(r'\s+', '', str(phone))  # Supprimer les espaces
+        if phone.startswith("+229") or phone.startswith("00229"):
+            phone = re.sub(r"(\+229|00229)", r"\1 01", phone)
+        elif len(phone) == 8 and phone.isdigit():
+            phone = "+229 01" + phone
+        return phone
+    
+    # Mettre à jour les numéros dans la colonne 'phone'
+    contacts["Phone 1 - Value"] = contacts["Phone 1 - Value"].apply(update_phone_number)
+    
+    return contacts
+
+def main():
+    st.title("Mise à jour des numéros Béninois 📞")
+    st.write("Importez un fichier CSV contenant la liste de vos contacts, et obtenez un nouveau CSV avec les numéros mis à jour.")
+
     # Ajout de la checkbox pour afficher les conditions d'utilisation
     if st.checkbox("Comment ça marche !?"):
         st.subheader("Conditions d’utilisation de l’application")
@@ -50,25 +68,7 @@ def process_phone_numbers(file):
         - Consultez notre documentation intégrée.  
         - Contactez-nous via [singbodavyagonma@gmail.com](mailto:singbodavyagonma@gmail.com) ou [kloo.me/davyagonma](https://kloo.me/davyagonma).  
         """)
-    
-    # Fonction pour nettoyer et mettre à jour les numéros
-    def update_phone_number(phone):
-        phone = re.sub(r'\s+', '', str(phone))  # Supprimer les espaces
-        if phone.startswith("+229") or phone.startswith("00229"):
-            phone = re.sub(r"(\+229|00229)", r"\1 01", phone)
-        elif len(phone) == 8 and phone.isdigit():
-            phone = "+229 01" + phone
-        return phone
-    
-    # Mettre à jour les numéros dans la colonne 'phone'
-    contacts["Phone 1 - Value"] = contacts["Phone 1 - Value"].apply(update_phone_number)
-    
-    return contacts
-
-def main():
-    st.title("Mise à jour des numéros Béninois 📞")
-    st.write("Importez un fichier CSV contenant la liste de vos contacts, et obtenez un nouveau CSV avec les numéros mis à jour.")
-    
+        
     # Charger le fichier CSV
     uploaded_file = st.file_uploader("Chargez votre fichier CSV", type=["csv"])
     
