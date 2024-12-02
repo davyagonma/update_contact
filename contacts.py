@@ -6,10 +6,50 @@ def process_phone_numbers(file):
     # Charger le fichier CSV
     contacts = pd.read_csv(file)
     
-    # Identifier la colonne contenant les numéros (supposons qu'elle s'appelle "phone")
-    # if "phone" not in contacts.columns:
-    #     st.error("Le fichier CSV doit contenir une colonne 'phone' avec les numéros de téléphone.")
-    #     return None
+    # Ajout de la checkbox pour afficher les conditions d'utilisation
+    if st.checkbox("Comment ça marche !?"):
+        st.subheader("Conditions d’utilisation de l’application")
+        st.markdown("""
+        ### Bienvenue sur notre application !  
+        Avant de l’utiliser, voici tout ce que vous devez savoir pour une expérience simple et fluide.  
+
+        #### **Ce que fait l’application :**  
+        - Vous importez un fichier CSV contenant vos contacts.  
+        - L’application met automatiquement à jour les numéros de téléphone béninois :  
+        - Elle ajoute **"01"** après les indicatifs **+229** ou **00229**.  
+        - Elle ajoute **"01"** devant les numéros à 8 chiffres sans indicatif.  
+        - Elle supprime les espaces dans les numéros pour uniformiser le format.  
+        - Vous téléchargez un nouveau fichier CSV prêt à être utilisé ou importé dans Google Contacts.  
+
+        #### **Comment obtenir votre fichier CSV depuis Google Contacts ?**  
+        1. Accédez à vos contacts Google : [Google Contacts](https://contacts.google.com).  
+        2. Sélectionnez vos contacts :  
+        - Par défaut, tous vos contacts sont sélectionnés.  
+        - Si vous souhaitez exporter uniquement un groupe spécifique, utilisez le menu de gauche pour choisir un groupe.  
+        3. Exportez vos contacts :  
+        - Cliquez sur l’icône **"Exporter"** (dans le menu de gauche ou via les paramètres).  
+        - Sélectionnez le format **Google CSV** pour l'exportation.  
+        - Téléchargez le fichier sur votre ordinateur.  
+        4. Consultez ce guide officiel de Google : [Exporter vos contacts](https://support.google.com/contacts/answer/1069522).  
+
+        #### **Ce que vous devez faire :**  
+        - Chargez le fichier CSV obtenu dans l’application en cliquant sur **"Charger un fichier"**.  
+        - Lancez le traitement pour mettre à jour les numéros de téléphone.  
+        - Téléchargez le fichier mis à jour une fois le traitement terminé.  
+        - Réimportez le fichier dans Google Contacts :  
+        - Retournez sur **Google Contacts**.  
+        - Cliquez sur **"Importer"**, choisissez le fichier mis à jour et validez.  
+
+        #### **Responsabilités et limites :**  
+        - **Format du fichier** : Assurez-vous d’utiliser un fichier CSV valide. L’application ne peut pas traiter d’autres formats.  
+        - **Vérification des résultats** : Vous devez vérifier les numéros mis à jour avant de les utiliser.  
+        - **Données sensibles** : Aucun fichier n’est conservé sur nos serveurs. Tout traitement est effectué localement.  
+
+        #### **Assistance :**  
+        Si vous avez des questions ou des problèmes :  
+        - Consultez notre documentation intégrée.  
+        - Contactez-nous via [singbodavyagonma@gmail.com](mailto:singbodavyagonma@gmail.com) ou [kloo.me/davyagonma](https://kloo.me/davyagonma).  
+        """)
     
     # Fonction pour nettoyer et mettre à jour les numéros
     def update_phone_number(phone):
